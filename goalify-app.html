@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0D12">
+<title>Goalify — حوّل أحلامك لخطة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0D12;--surface:#17171F;--card:#1F1F2C;
+  --primary:#8B5CF6;--primary2:#A855F7;--pink:#EC4899;
+  --success:#22C55E;--warn:#F59E0B;
+  --text:#FFF;--text2:#B8B8C7;--border:rgba(255,255,255,.06);
+  --track:rgba(255,255,255,.08);--shadow:0 18px 45px rgba(0,0,0,.4);
+  --grad:linear-gradient(135deg,#8B5CF6,#A855F7 55%,#EC4899);
+  --fh:'Poppins',sans-serif;--fb:'Inter',sans-serif;--fn:'Manrope',sans-serif;
+}
+[data-theme="light"]{
+  --bg:#F7F7FB;--surface:#FFF;--card:#FFF;--primary:#7C3AED;--primary2:#A855F7;
+  --text:#1E1E2E;--text2:#6B6B80;--border:#ECECF5;--track:#ECECF5;
+  --shadow:0 18px 40px rgba(30,30,46,.07);
+}
+html[dir="rtl"]{--fh:'IBM Plex Sans Arabic',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fn:'IBM Plex Sans Arabic',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:14px;min-height:100vh;transition:background .35s,color .35s}
+h1,h2,h3,b,strong{font-family:var(--fh)}
+.num{font-family:var(--fn);font-weight:700}
+button,input,textarea,select{font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:var(--primary2);text-decoration:none}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--track);border-radius:8px}
+.hide{display:none!important}
+
+/* atoms */
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:13px;font-weight:600;font-size:13px;transition:.2s}
+.btn-p{background:var(--grad);color:#fff;box-shadow:0 10px 24px rgba(139,92,246,.38)}
+.btn-p:active{transform:scale(.97)}
+.btn-g{background:var(--card);border:1px solid var(--border)}
+.btn-g:hover{border-color:var(--primary)}
+.btn-d{background:rgba(236,72,153,.14);color:#F472B6}
+.btn:disabled{opacity:.5;pointer-events:none}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;font-size:12px;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer}
+.chip.on{background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(236,72,153,.14));color:var(--text);border-color:rgba(139,92,246,.42)}
+.tag{padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
+.tag.purple{background:rgba(139,92,246,.16);color:#A78BFA}
+.tag.pink{background:rgba(236,72,153,.14);color:#F472B6}
+.tag.green{background:rgba(34,197,94,.14);color:#4ADE80}
+.tag.amber{background:rgba(245,158,11,.15);color:#FBBF24}
+[data-theme="light"] .tag.purple{color:#7C3AED}[data-theme="light"] .tag.pink{color:#DB2777}
+[data-theme="light"] .tag.green{color:#16A34A}[data-theme="light"] .tag.amber{color:#D97706}
+.bar{height:7px;border-radius:99px;background:var(--track);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--grad);transition:width .5s}
+.bar i.g{background:linear-gradient(90deg,#22C55E,#4ADE80)}
+.row{display:flex;align-items:center}
+.grid{display:grid;gap:16px}
+.muted{color:var(--text2)}
+.ava{border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:700;font-family:var(--fh);flex-shrink:0}
+.check{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--track);flex-shrink:0;display:grid;place-items:center;cursor:pointer;transition:.2s;font-size:12px}
+.check.on{background:var(--grad);border-color:transparent;color:#fff}
+.check.rnd{border-radius:50%}
+.divider{height:1px;background:var(--border);margin:14px 0}
+.icbtn{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--card);border:1px solid var(--border);color:var(--text2);flex-shrink:0}
+.icbtn:hover{color:var(--text)}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:12px;font-weight:600;color:var(--text2)}
+input,textarea,select{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;font-size:13px;outline:none;width:100%;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--primary)}
+textarea{resize:vertical;min-height:110px;line-height:1.7}
+.empty{text-align:center;padding:40px 20px;color:var(--text2)}
+.empty .e{font-size:38px;margin-bottom:12px}
+.sw{width:44px;height:25px;border-radius:99px;background:var(--track);position:relative;flex-shrink:0;cursor:pointer;transition:.25s}
+.sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.25s}
+.sw.on{background:var(--grad)}
+.sw.on::after{transform:translateX(19px)}
+[dir="rtl"] .sw.on::after{transform:translateX(-19px)}
+
+/* shell */
+#app{display:flex;min-height:100vh}
+.side{width:230px;flex-shrink:0;background:var(--surface);border-inline-end:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{display:flex;align-items:center;gap:10px;padding:2px 8px 18px}
+.orb{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff;font-family:var(--fh);font-weight:800;box-shadow:0 6px 18px rgba(139,92,246,.4)}
+.nav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;font-size:13px;font-weight:500;color:var(--text2);width:100%;text-align:start;transition:.18s}
+.nav svg{width:18px;height:18px;flex-shrink:0}
+.nav:hover{background:var(--card);color:var(--text)}
+.nav.on{background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(236,72,153,.1));color:var(--text)}
+.nav.on svg{color:var(--primary2)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:20}
+.page{padding:22px;display:grid;gap:16px;flex:1;align-content:start}
+.ph{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.ph h1{font-size:22px}
+.ph .sub{color:var(--text2);font-size:12.5px;margin-top:4px}
+.bottom{display:none}
+
+/* auth */
+.auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.auth-vis{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:40px;
+ background:radial-gradient(500px 400px at 30% 22%,rgba(139,92,246,.4),transparent 70%),radial-gradient(420px 380px at 80% 88%,rgba(236,72,153,.28),transparent 70%),var(--surface)}
+.ball{position:absolute;top:12%;inset-inline-start:50%;transform:translateX(-50%);width:220px;height:220px;border-radius:50%;
+ background:radial-gradient(circle at 32% 28%,#C4B5FD,#8B5CF6 42%,#6D28D9 72%,#EC4899 115%);box-shadow:0 30px 90px rgba(139,92,246,.5)}
+[dir="rtl"] .ball{transform:translateX(50%)}
+.auth-form{padding:48px 56px;display:flex;flex-direction:column;justify-content:center;max-width:520px;width:100%;margin:auto}
+.glass{background:rgba(31,31,44,.55);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:18px;padding:18px}
+[data-theme="light"] .glass{background:rgba(255,255,255,.65)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+.modal.on{display:flex}
+.sheet{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;width:100%;max-width:440px;box-shadow:0 30px 80px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;animation:up .25s ease}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* toast */
+#toast{position:fixed;bottom:24px;inset-inline-start:50%;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;
+ background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 20px;font-size:13px;font-weight:600;z-index:99;box-shadow:var(--shadow);transition:.25s}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* heatmap / kanban */
+.hm{display:grid;grid-template-columns:repeat(15,1fr);gap:4px}
+.hm i{aspect-ratio:1;border-radius:4px;background:var(--track)}
+.hm i.on{background:var(--grad)}
+.kcol{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;display:grid;gap:10px;align-content:start;min-height:120px}
+.kcard{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:12px;display:grid;gap:8px;cursor:grab}
+.kcard.drag{opacity:.4}
+.kcol.over{border-color:var(--primary)}
+
+.mood{flex:1;aspect-ratio:1.4;border-radius:14px;font-size:22px;background:var(--surface);border:1.5px solid var(--border)}
+.mood.on{background:linear-gradient(135deg,rgba(139,92,246,.28),rgba(236,72,153,.16));border-color:rgba(139,92,246,.5)}
+
+@media(max-width:900px){
+  .side{position:fixed;z-index:60;inset-inline-start:0;top:0;transform:translateX(-105%);transition:transform .28s}
+  [dir="rtl"] .side{transform:translateX(105%)}
+  .side.open{transform:none!important;box-shadow:0 0 60px rgba(0,0,0,.5)}
+  #scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;display:none}
+  #scrim.on{display:block}
+  .hamb{display:grid!important}
+  .page{padding:14px;gap:14px;padding-bottom:88px}
+  .grid[style*="repeat"]{grid-template-columns:1fr!important}
+  .ph h1{font-size:19px}
+  .auth{grid-template-columns:1fr}
+  .auth-vis{display:none}
+  .auth-form{padding:34px 22px}
+  .bottom{display:flex;position:fixed;bottom:0;inset-inline:0;z-index:40;background:var(--surface);border-top:1px solid var(--border);
+   padding:8px 4px calc(8px + env(safe-area-inset-bottom));justify-content:space-around}
+  .bottom button{flex:1;display:grid;justify-items:center;gap:3px;padding:6px 2px;border-radius:12px;color:var(--text2);font-size:9px;font-weight:600}
+  .bottom button svg{width:20px;height:20px}
+  .bottom button.on{color:var(--text);background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(236,72,153,.1))}
+  .bottom button.on svg{color:var(--primary2)}
+  .hm{grid-template-columns:repeat(10,1fr)}
+}
+
+/* ================= NO HORIZONTAL SCROLL — MOBILE FIT ================= */
+html,body{max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+#root,#app,.main{max-width:100%;min-width:0}
+.page > *{max-width:100%}
+.card,.kcol,.kcard,.top,.ph{min-width:0}
+.row{min-width:0;flex-wrap:wrap}
+.row > *{min-width:0}
+b,span,p,div,h1{overflow-wrap:anywhere;word-break:break-word}
+svg,img{max-width:100%}
+select,input,textarea{max-width:100%}
+
+@media(max-width:900px){
+  /* أي شبكة جوه الصفحة تبقى عمود واحد — مهما كان الـ inline style */
+  .page .grid,
+  .page .card > .grid,
+  .page [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  .page .grid{gap:12px}
+  /* هيدر تفاصيل الهدف: يتراص بدل ما يتقصف */
+  .page .card[style*="auto 1fr auto"]{justify-items:stretch;text-align:start}
+  .side{width:min(240px,80vw)}
+  .top{padding:11px 14px;gap:8px}
+  .top b{font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card{padding:15px;border-radius:16px}
+  .ph{gap:10px}
+  .ph .btn{width:100%}
+  .mood{aspect-ratio:1.15;font-size:19px}
+  .check{width:24px;height:24px}
+  .hm{grid-template-columns:repeat(10,1fr);gap:3px}
+  .sheet{border-radius:18px;padding:18px}
+  .sheet .grid{grid-template-columns:1fr!important}
+  .tag{font-size:9.5px;padding:3px 8px}
+  .chip{padding:6px 11px;font-size:11.5px}
+  .kcol{padding:10px}
+  .empty{padding:28px 12px}
+  .gdHead{grid-template-columns:1fr!important;justify-items:center;text-align:center}
+  .gdHead > div:last-child{width:100%}
+  .gdHead select,.gdHead .btn{width:100%}
+}
+@media(max-width:400px){
+  .page{padding:11px}
+  .card{padding:13px}
+  .ph h1{font-size:17px}
+  .mood{font-size:17px}
+}
+.hamb{display:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="scrim" onclick="closeSide()"></div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+
+<script type="module">
+/* ============================================================
+   ⚙️  CONFIG — غيّري السطرين دول بس من Supabase → Project Settings → API
+   ============================================================ */
+const CONFIG = {
+  SUPABASE_URL : "https://vyaeutrbzrqklumuqisr.supabase.co",
+  SUPABASE_KEY : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ5YWV1dHJienJxa2x1bXVxaXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5NDIyNjgsImV4cCI6MjA5OTUxODI2OH0.GG9S2eP1n58d5em3wly9JFtz8AM2u2dH0eYtUKuEdWU",
+  APP_NAME     : "Goalify"
+};
+/* ============================================================ */
+
+/* ------------------------------------------------------------
+   الاتصال: لو CONFIG متملّي → Supabase حقيقي.
+   لو لأ (أو النت مقفول) → وضع تجريبي محلي، والتطبيق يفضل شغّال.
+   ------------------------------------------------------------ */
+let sb, LOCAL = false;
+try {
+  if (CONFIG.SUPABASE_URL.includes("YOUR-PROJECT")) throw new Error("not configured");
+  const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+  sb = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+} catch (e) {
+  LOCAL = true;
+  sb = makeLocalDB();
+}
+
+/* ---------- Local fallback: نفس واجهة supabase-js بالظبط ---------- */
+function makeLocalDB(){
+  const KEY='goalify_local_db';
+  const blank={profiles:[],goals:[],milestones:[],tasks:[],habits:[],habit_logs:[],journal:[],vision_items:[]};
+  let store;
+  try{ store = JSON.parse(localStorage.getItem(KEY)) || structuredClone(blank); }
+  catch{ store = structuredClone(blank); }
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch{}};
+  const uid=()=>crypto.randomUUID? crypto.randomUUID() : 'id-'+Math.random().toString(36).slice(2)+Date.now();
+  const today=()=>new Date().toISOString().slice(0,10);
+  // نفس الـ DEFAULTS بتاعة جداول Supabase — عشان الوضع المحلي يطابق السحابي
+  const DEF={
+    goals:()=>({status:'active',category:'career',emoji:'🎯',description:'',start_date:today(),target_date:null}),
+    milestones:()=>({done:false,position:0}),
+    tasks:()=>({status:'todo',priority:'med',label:'',goal_id:null,due_date:null}),
+    habits:()=>({emoji:'🔥'}),
+    habit_logs:()=>({log_date:today()}),
+    journal:()=>({mood:3,body:'',gratitude:[],entry_date:today()}),
+    vision_items:()=>({emoji:'✨',category:'career',caption:''}),
+    profiles:()=>({name:'Demo',bio:'',xp:0,lang:'ar',theme:'dark'})
+  };
+  const withDef=(tbl,r)=>({...(DEF[tbl]?DEF[tbl]():{}),...r});
+  const U={id:'local-user',email:'demo@goalify.app'};
+  let listener=null;
+
+  class Q {
+    constructor(tbl){this.tbl=tbl;this.op='select';this.rows=null;this.f=[];this.one=false;this.ord=null;this.conflict=null}
+    select(){return this}
+    order(col,o){this.ord=[col,o?.ascending!==false];return this}
+    limit(n){this.lim=n;return this}
+    eq(c,v){this.f.push([c,'eq',v]);return this}
+    gte(c,v){this.f.push([c,'gte',v]);return this}
+    single(){this.one=true;return this}
+    insert(r){this.op='insert';this.rows=Array.isArray(r)?r:[r];return this}
+    update(r){this.op='update';this.rows=[r];return this}
+    upsert(r,o){this.op='upsert';this.rows=[r];this.conflict=(o?.onConflict||'').split(',');return this}
+    delete(){this.op='delete';return this}
+    _match(x){return this.f.every(([c,op,v])=> op==='eq' ? String(x[c])===String(v) : String(x[c])>=String(v))}
+    _out(d){return {data:this.one?(d[0]??null):d, error:null}}
+    then(res){
+      const T=store[this.tbl]||(store[this.tbl]=[]);
+      let d;
+      if(this.op==='insert'){
+        d=this.rows.map(r=>({id:uid(),created_at:new Date().toISOString(),...withDef(this.tbl,r)}));
+        T.push(...d); save();
+      } else if(this.op==='upsert'){
+        const r=withDef(this.tbl,this.rows[0]);
+        const i=T.findIndex(x=>this.conflict.every(k=>String(x[k])===String(r[k])));
+        if(i>=0){T[i]={...T[i],...r};d=[T[i]]}
+        else{const n={id:uid(),...r};T.push(n);d=[n]}
+        save();
+      } else if(this.op==='update'){
+        d=T.filter(x=>this._match(x));
+        d.forEach(x=>Object.assign(x,this.rows[0])); save();
+      } else if(this.op==='delete'){
+        store[this.tbl]=T.filter(x=>!this._match(x)); d=[]; save();
+      } else {
+        d=T.filter(x=>this._match(x));
+        if(this.ord){const [c,asc]=this.ord;d=[...d].sort((a,b)=>String(a[c]??'').localeCompare(String(b[c]??''))*(asc?1:-1))}
+        if(this.lim)d=d.slice(0,this.lim);
+      }
+      return Promise.resolve(this._out(d)).then(res);
+    }
+  }
+  const ensureProfile=()=>{ if(!store.profiles.length){ store.profiles.push({id:U.id,name:'Demo',xp:0,lang:'ar',theme:'dark'}); save(); } };
+  return {
+    from:tbl=>new Q(tbl),
+    auth:{
+      getSession:async()=>({data:{session: (()=>{try{return localStorage.getItem('goalify_signed')?{user:U}:null}catch{return null}})() }}),
+      signInWithPassword:async()=>{ensureProfile();try{localStorage.setItem('goalify_signed','1')}catch{};return{data:{session:{user:U}},error:null}},
+      signUp:async({options})=>{ensureProfile();
+        if(options?.data?.name){store.profiles[0].name=options.data.name;save()}
+        try{localStorage.setItem('goalify_signed','1')}catch{};
+        return{data:{session:{user:U}},error:null}},
+      signOut:async()=>{try{localStorage.removeItem('goalify_signed')}catch{};listener?.('SIGNED_OUT',null);return{error:null}},
+      onAuthStateChange:cb=>{listener=cb;return{data:{subscription:{unsubscribe(){}}}}}
+    }
+  };
+}
+
+/* ---------- i18n ---------- */
+const T={ar:{
+ tagline:"حوّل أحلامك لخطة تعيشها",
+ login:"تسجيل الدخول",register:"إنشاء حساب",email:"البريد الإلكتروني",pass:"كلمة المرور",name:"الاسم",
+ loginBtn:"دخول",regBtn:"أنشئ حسابي",noAcc:"معندكش حساب؟",haveAcc:"عندك حساب؟",
+ welcome:"أهلًا بعودتك",welcomeSub:"أهدافك مستنياك.",joinT:"ابدأ رحلتك",joinSub:"دقيقة واحدة وأول هدف يبقى خطة.",
+ quote:"«الانضباط هو اختيار ما تريده أكثر على ما تريده الآن.»",
+ dashboard:"لوحة التحكم",goals:"الأهداف",tasks:"المهام",habits:"العادات",journal:"اليوميات",vision:"لوحة الأحلام",stats:"التحليلات",settings:"الإعدادات",profile:"الملف",
+ hi:"أهلًا",today:"مهام اليوم",focus:"تركيز اليوم",quick:"إجراءات سريعة",
+ newGoal:"هدف جديد",newTask:"مهمة جديدة",newHabit:"عادة جديدة",newVision:"صورة/حلم",
+ activeGoals:"أهداف نشطة",doneTasks:"مهام منجزة",streak:"يوم متتالٍ",habitsToday:"عادات اليوم",
+ progress:"التقدّم",milestones:"محطات",noGoals:"مفيش أهداف لسه",noGoalsSub:"ابدئي بأول حلم وحوّليه لمحطات.",
+ noTasks:"مفيش مهام النهاردة",noTasksSub:"ضيفي مهمة تحرّك هدفك خطوة.",
+ noHabits:"مفيش عادات",noHabitsSub:"العادات الصغيرة هي اللي بتبني الكبير.",
+ noJournal:"ابدئي أول تدوينة",
+ title:"العنوان",desc:"الوصف",category:"التصنيف",target:"تاريخ الهدف",due:"الموعد",priority:"الأولوية",
+ high:"عالية",med:"متوسطة",low:"منخفضة",
+ career:"مهنة",health:"صحة",learning:"تعلّم",finance:"مال",creative:"إبداع",travel:"سفر",
+ save:"حفظ",cancel:"إلغاء",delete:"حذف",edit:"تعديل",add:"إضافة",addMs:"إضافة محطة",back:"رجوع",
+ status:"الحالة",active:"نشط",done:"مكتمل",paused:"متوقف",all:"الكل",
+ todo:"للتنفيذ",doing:"جارٍ",kdone:"تم",
+ mood:"إزاي كان يومك؟",reflect:"تأمل اليوم",grat:"ممتنة لـ",gratPh:"حاجة كويسة حصلت…",saveEntry:"حفظ اليومية",saved:"اتحفظ ✓",
+ heat:"آخر ٣٠ يوم",bestStreak:"أطول سلسلة",
+ appearance:"المظهر",dark:"داكن",light:"فاتح",lang:"اللغة",account:"الحساب",logout:"تسجيل الخروج",
+ exportData:"تصدير بياناتي",exportD:"نزّلي كل حاجة JSON",export:"تصدير",
+ dangerZone:"منطقة الخطر",delAcc:"حذف كل البيانات",delAccD:"هيتمسح كل شيء ومفيش رجوع",
+ confirmDel:"متأكدة؟ مفيش رجوع.",xp:"نقطة",level:"المستوى",
+ err:"في حاجة غلط، جرّبي تاني",need:"املي الحقول المطلوبة",
+ setupTitle:"محتاج ربط Supabase",setupSub:"افتحي الملف وغيّري SUPABASE_URL و SUPABASE_KEY في بلوك CONFIG فوق، وشغّلي ملف الـ SQL في Supabase.",
+ confirmMail:"بصي في إيميلك وأكّدي الحساب، بعدين ادخلي.",
+ demoOn:"وضع تجريبي — البيانات محفوظة على جهازك فقط",
+ demoSub:"املي SUPABASE_URL و SUPABASE_KEY في بلوك CONFIG عشان تشتغل على السحابة.",
+ demoAuth:"وضع تجريبي: اكتبي أي إيميل وباسورد وادخلي على طول.",
+ seed:"جرّبي ببيانات جاهزة"
+},en:{
+ tagline:"Turn dreams into a plan you live",
+ login:"Sign in",register:"Create account",email:"Email",pass:"Password",name:"Name",
+ loginBtn:"Sign in",regBtn:"Create my account",noAcc:"No account?",haveAcc:"Have an account?",
+ welcome:"Welcome back",welcomeSub:"Your goals are waiting.",joinT:"Start your journey",joinSub:"One minute and your first dream becomes a plan.",
+ quote:"“Discipline is choosing what you want most over what you want now.”",
+ dashboard:"Dashboard",goals:"Goals",tasks:"Tasks",habits:"Habits",journal:"Journal",vision:"Vision board",stats:"Analytics",settings:"Settings",profile:"Profile",
+ hi:"Hi",today:"Today's tasks",focus:"Today's focus",quick:"Quick actions",
+ newGoal:"New goal",newTask:"New task",newHabit:"New habit",newVision:"New pin",
+ activeGoals:"Active goals",doneTasks:"Tasks done",streak:"Day streak",habitsToday:"Habits today",
+ progress:"Progress",milestones:"milestones",noGoals:"No goals yet",noGoalsSub:"Start with one dream and break it into milestones.",
+ noTasks:"Nothing due today",noTasksSub:"Add a task that moves a goal forward.",
+ noHabits:"No habits yet",noHabitsSub:"Small daily wins build the big things.",
+ noJournal:"Write your first entry",
+ title:"Title",desc:"Description",category:"Category",target:"Target date",due:"Due",priority:"Priority",
+ high:"High",med:"Medium",low:"Low",
+ career:"Career",health:"Health",learning:"Learning",finance:"Finance",creative:"Creative",travel:"Travel",
+ save:"Save",cancel:"Cancel",delete:"Delete",edit:"Edit",add:"Add",addMs:"Add milestone",back:"Back",
+ status:"Status",active:"Active",done:"Done",paused:"Paused",all:"All",
+ todo:"To do",doing:"In progress",kdone:"Done",
+ mood:"How was today?",reflect:"Reflection",grat:"Grateful for",gratPh:"Something good today…",saveEntry:"Save entry",saved:"Saved ✓",
+ heat:"Last 30 days",bestStreak:"Best streak",
+ appearance:"Appearance",dark:"Dark",light:"Light",lang:"Language",account:"Account",logout:"Sign out",
+ exportData:"Export my data",exportD:"Download everything as JSON",export:"Export",
+ dangerZone:"Danger zone",delAcc:"Delete all data",delAccD:"Everything is erased. No undo.",
+ confirmDel:"Are you sure? No undo.",xp:"XP",level:"Level",
+ err:"Something went wrong, try again",need:"Fill the required fields",
+ setupTitle:"Supabase not connected",setupSub:"Open this file, set SUPABASE_URL and SUPABASE_KEY in the CONFIG block, and run the SQL file in Supabase.",
+ confirmMail:"Check your email to confirm, then sign in.",
+ demoOn:"Demo mode — data is saved on this device only",
+ demoSub:"Fill SUPABASE_URL and SUPABASE_KEY in the CONFIG block to go cloud.",
+ demoAuth:"Demo mode: type any email + password to enter.",
+ seed:"Load sample data"
+}};
+let LANG = get('lang') || 'ar';
+let THEME = get('theme') || 'dark';
+const t = k => (T[LANG][k] ?? T.en[k] ?? k);
+function get(k){try{return localStorage.getItem('goalify_'+k)}catch{return null}}
+function set(k,v){try{localStorage.setItem('goalify_'+k,v)}catch{}}
+
+/* ---------- icons ---------- */
+const I={home:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/>',
+target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/>',
+check:'<path d="M9 11.5l2.2 2.2L15.5 9"/><rect x="3.5" y="3.5" width="17" height="17" rx="5"/>',
+flame:'<path d="M12 3c1 3-3 4.5-3 8a3 3 0 006 0c0-1.2-.6-2-1-2.7 2.6 1 4 3 4 5.7a6 6 0 01-12 0c0-4.6 4.4-6.6 6-11z"/>',
+pen:'<path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 013 3L8 19z"/><path d="M13.5 7.5l3 3"/>',
+image:'<rect x="3.5" y="4.5" width="17" height="15" rx="3.5"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4 4 3 3-2.5 4 3.5"/>',
+chart:'<path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-8"/>',
+gear:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8l1 2.6 2.7-.6 1 2.4 2.6 1-.6 2.8 2 1.9-2 2-.6 2.7-2.7 1-1 2.4-2.7-.6-1 2.6-1-2.6-2.7.6-1-2.4-2.7-1 .6-2.7-2-2 2-1.9-.6-2.8 2.6-1 1-2.4 2.7.6z" opacity=".5"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',trash:'<path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/>',
+sun:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/>',
+moon:'<path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0115 0"/>',
+menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>'};
+const ic=(n,s=18)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${I[n]||''}</svg>`;
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const iso=d=>new Date(d).toISOString().slice(0,10);
+const TODAY=iso(new Date());
+function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200)}
+function ringSVG(p,size=120,sw=11){const r=(size-sw)/2,c=2*Math.PI*r;return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform:rotate(-90deg)">
+<defs><linearGradient id="g${size}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>
+<circle cx="${size/2}" cy="${size/2}" r="${r}" stroke="var(--track)" stroke-width="${sw}" fill="none"/>
+<circle cx="${size/2}" cy="${size/2}" r="${r}" stroke="url(#g${size})" stroke-width="${sw}" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p/100)}"/></svg>`}
+const ring=(p,size=120,sw=11,sub='')=>`<div style="position:relative;width:${size}px;height:${size}px">${ringSVG(p,size,sw)}
+<div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center"><div><div class="num" style="font-size:${size/4.5}px">${p}%</div><div class="muted" style="font-size:10px">${esc(sub)}</div></div></div></div>`;
+const barEl=(p,cls='')=>`<div class="bar"><i class="${cls}" style="width:${p}%"></i></div>`;
+const CATS=['career','health','learning','finance','creative','travel'];
+const CAT_EMOJI={career:'💼',health:'💪',learning:'📚',finance:'💰',creative:'🎨',travel:'✈️'};
+
+/* ---------- state ---------- */
+let USER=null, PROFILE=null, VIEW='dashboard', CURRENT_GOAL=null;
+let DB={goals:[],ms:[],tasks:[],habits:[],logs:[],journal:[],vision:[]};
+
+/* ============================================================
+   DATA LAYER
+   ============================================================ */
+async function loadAll(){
+  const uid=USER.id;
+  await repairLocal();
+  const [g,m,tk,h,l,j,v,p]=await Promise.all([
+    sb.from('goals').select('*').order('created_at',{ascending:false}),
+    sb.from('milestones').select('*').order('position'),
+    sb.from('tasks').select('*').order('created_at',{ascending:false}),
+    sb.from('habits').select('*').order('created_at'),
+    sb.from('habit_logs').select('*').gte('log_date',iso(Date.now()-40*864e5)),
+    sb.from('journal').select('*').order('entry_date',{ascending:false}).limit(30),
+    sb.from('vision_items').select('*').order('created_at',{ascending:false}),
+    sb.from('profiles').select('*').eq('id',uid).single()
+  ]);
+  DB={goals:g.data||[],ms:m.data||[],tasks:tk.data||[],habits:h.data||[],logs:l.data||[],journal:j.data||[],vision:v.data||[]};
+  PROFILE=p.data||{name:USER.email.split('@')[0],xp:0};
+}
+async function repairLocal(){ // إصلاح صفوف قديمة اتحفظت من غير status
+  if(!LOCAL)return;
+  const {data:gs}=await sb.from('goals').select('*');
+  for(const g of (gs||[])) if(!g.status) await sb.from('goals').update({status:'active'}).eq('id',g.id);
+  const {data:ts}=await sb.from('tasks').select('*');
+  for(const x of (ts||[])) if(!x.status) await sb.from('tasks').update({status:'todo',priority:x.priority||'med'}).eq('id',x.id);
+}
+const ins=(tbl,row)=>sb.from(tbl).insert({...row,user_id:USER.id}).select().single();
+const upd=(tbl,id,row)=>sb.from(tbl).update(row).eq('id',id).select().single();
+const del=(tbl,id)=>sb.from(tbl).delete().eq('id',id);
+async function addXP(n){const xp=(PROFILE.xp||0)+n;PROFILE.xp=xp;await sb.from('profiles').update({xp}).eq('id',USER.id)}
+
+/* derived */
+const gStatus=g=>g.status||'active';
+const tStatus=x=>x.status||'todo';
+const goalProgress=g=>{const ms=DB.ms.filter(m=>m.goal_id===g.id);if(!ms.length)return gStatus(g)==='done'?100:0;
+  return Math.round(ms.filter(m=>m.done).length/ms.length*100)};
+const todayTasks=()=>DB.tasks.filter(x=>tStatus(x)!=='done'&&(!x.due_date||x.due_date<=TODAY));
+const doneToday=h=>DB.logs.some(l=>l.habit_id===h.id&&l.log_date===TODAY);
+function streakOf(hid){let s=0,d=new Date();
+  for(let i=0;i<400;i++){const k=iso(d);const has=DB.logs.some(l=>l.habit_id===hid&&l.log_date===k);
+    if(has)s++;else if(i>0||!has&&i===0){if(i===0){d.setDate(d.getDate()-1);continue}break}
+    d.setDate(d.getDate()-1)}
+  return s}
+const bestStreakAll=()=>DB.habits.length?Math.max(...DB.habits.map(h=>streakOf(h.id))):0;
+const level=()=>Math.floor((PROFILE?.xp||0)/250)+1;
+
+/* ============================================================
+   AUTH SCREENS
+   ============================================================ */
+let AUTH_MODE='login';
+function authView(){
+  const isLogin=AUTH_MODE==='login';
+  return `<div class="auth">
+  <div class="auth-vis">
+    <div class="ball"></div>
+    <div class="glass"><p style="font-size:14px;line-height:1.8;font-weight:500">${t('quote')}</p></div>
+  </div>
+  <div class="auth-form">
+    <div class="row" style="gap:10px;margin-bottom:28px"><div class="orb">G</div><div><b style="font-size:16px">${CONFIG.APP_NAME}</b><div class="muted" style="font-size:11px">${t('tagline')}</div></div></div>
+    <h1 style="font-size:25px">${isLogin?t('welcome'):t('joinT')}</h1>
+    <p class="muted" style="font-size:13px;margin:7px 0 22px">${isLogin?t('welcomeSub'):t('joinSub')}</p>
+    ${isLogin?'':`<div class="field"><label>${t('name')}</label><input id="aName" placeholder="Salma"></div>`}
+    <div class="field"><label>${t('email')}</label><input id="aMail" type="email" placeholder="you@mail.com" autocomplete="email"></div>
+    <div class="field"><label>${t('pass')}</label><input id="aPass" type="password" placeholder="••••••••" autocomplete="${isLogin?'current-password':'new-password'}"></div>
+    <button class="btn btn-p" style="width:100%;padding:13px;margin-top:6px" id="aGo">${isLogin?t('loginBtn'):t('regBtn')}</button>
+    <p class="muted" style="font-size:12.5px;text-align:center;margin-top:18px">
+      ${isLogin?t('noAcc'):t('haveAcc')} <a href="#" id="aSwap" style="font-weight:700">${isLogin?t('register'):t('login')}</a></p>
+    ${LOCAL?`<p class="muted" style="font-size:11.5px;text-align:center;margin-top:14px;line-height:1.7">⚡ ${t('demoAuth')}</p>`:''}
+    <div class="row" style="gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap">
+      <button class="chip" id="aLang">${LANG==='ar'?'English':'العربية'}</button>
+      <button class="chip" id="aTheme">${THEME==='dark'?'☀️':'🌙'}</button>
+      ${LOCAL?`<button class="chip" id="aSeed">✨ ${t('seed')}</button>`:''}
+    </div>
+  </div></div>`;
+}
+function bindAuth(){
+  $('#aSwap').onclick=e=>{e.preventDefault();AUTH_MODE=AUTH_MODE==='login'?'register':'login';render()};
+  $('#aLang').onclick=()=>setLang(LANG==='ar'?'en':'ar');
+  $('#aTheme').onclick=()=>setTheme(THEME==='dark'?'light':'dark');
+  const sd=$('#aSeed'); if(sd) sd.onclick=async()=>{
+    await sb.auth.signInWithPassword({email:'demo@goalify.app',password:'demo'});
+    const {data:{session}}=await sb.auth.getSession(); USER=session.user; await loadAll();
+    if(!DB.goals.length) await seedDemo();
+    await loadAll(); render();
+  };
+  $('#aGo').onclick=async e=>{
+    const mail=$('#aMail').value.trim(), pass=$('#aPass').value;
+    if(!mail||!pass)return toast(t('need'));
+    e.target.disabled=true;
+    try{
+      if(AUTH_MODE==='login'){
+        const {error}=await sb.auth.signInWithPassword({email:mail,password:pass});
+        if(error)throw error;
+      }else{
+        const name=$('#aName').value.trim()||mail.split('@')[0];
+        const {data,error}=await sb.auth.signUp({email:mail,password:pass,options:{data:{name}}});
+        if(error)throw error;
+        if(!data.session){toast(t('confirmMail'));e.target.disabled=false;return}
+      }
+      await boot();
+    }catch(err){toast(err.message||t('err'));e.target.disabled=false}
+  };
+}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+const NAVS=[['dashboard','home'],['goals','target'],['tasks','check'],['habits','flame'],['journal','pen'],['vision','image'],['stats','chart'],['settings','gear']];
+const BOTTOM=[['dashboard','home'],['goals','target'],['tasks','check'],['habits','flame'],['journal','pen']];
+function shell(inner){
+  return `<div id="app">
+  <aside class="side" id="side">
+    <div class="logo"><div class="orb">G</div><div><b style="font-size:16px">${CONFIG.APP_NAME}</b><div class="muted" style="font-size:10px">${t('tagline')}</div></div></div>
+    ${NAVS.map(([v,i])=>`<button class="nav ${VIEW===v?'on':''}" data-go="${v}">${ic(i)} ${t(v)}</button>`).join('')}
+    <div style="flex:1"></div>
+    <div class="divider"></div>
+    <div class="row card" style="gap:10px;padding:10px;border-radius:14px">
+      <div class="ava" style="width:34px;height:34px;font-size:13px">${esc((PROFILE?.name||'U')[0].toUpperCase())}</div>
+      <div style="min-width:0;flex:1"><div style="font-size:12px;font-weight:700">${esc(PROFILE?.name||'')}</div>
+      <div class="muted num" style="font-size:10px">${t('level')} ${level()} · ${PROFILE?.xp||0} ${t('xp')}</div></div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <button class="icbtn hamb" id="hamb">${ic('menu',18)}</button>
+      <b style="font-size:15px">${t(VIEW)}</b>
+      <div style="flex:1"></div>
+      <button class="icbtn" id="tTheme">${ic(THEME==='dark'?'sun':'moon',17)}</button>
+      <button class="chip" id="tLang">${LANG==='ar'?'EN':'ع'}</button>
+      <div class="ava" style="width:34px;height:34px;font-size:13px">${esc((PROFILE?.name||'U')[0].toUpperCase())}</div>
+    </header>
+    <div class="page">
+      ${LOCAL?`<div class="card" style="background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(236,72,153,.08)),var(--card);border-color:rgba(245,158,11,.35);padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:18px">⚡</span>
+        <div style="flex:1;min-width:180px"><b style="font-size:12.5px">${t('demoOn')}</b>
+        <div class="muted" style="font-size:11px;margin-top:2px">${t('demoSub')}</div></div></div>`:''}
+      ${inner}</div>
+  </div>
+  <nav class="bottom">${BOTTOM.map(([v,i])=>`<button class="${VIEW===v?'on':''}" data-go="${v}">${ic(i,20)}<span>${t(v)}</span></button>`).join('')}</nav>
+  </div>`;
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+const V={};
+
+V.dashboard=()=>{
+  const active=DB.goals.filter(g=>gStatus(g)==='active');
+  const top=active.map(g=>({g,p:goalProgress(g)})).sort((a,b)=>b.p-a.p)[0];
+  const tt=todayTasks().slice(0,6);
+  const dtoday=DB.tasks.filter(x=>tStatus(x)==='done').length;
+  const hDone=DB.habits.filter(doneToday).length;
+  const stats=[[active.length,'activeGoals','target'],[dtoday,'doneTasks','check'],[bestStreakAll(),'streak','flame'],[`${hDone}/${DB.habits.length}`,'habitsToday','pen']];
+  return `
+  <div class="ph"><div><h1>${t('hi')} ${esc((PROFILE?.name||'').split(' ')[0])} 👋</h1>
+  <p class="sub">${active.length?`${active.length} ${t('activeGoals')} · ${tt.length} ${t('today')}`:t('noGoalsSub')}</p></div>
+  <button class="btn btn-p" data-modal="goal">${ic('plus',15)} ${t('newGoal')}</button></div>
+
+  <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+    ${stats.map(([v,k,i])=>`<div class="card row" style="gap:12px">
+    <div style="width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(236,72,153,.12));color:var(--primary2)">${ic(i,19)}</div>
+    <div><div class="num" style="font-size:21px">${v}</div><div class="muted" style="font-size:11px">${t(k)}</div></div></div>`).join('')}
+  </div>
+
+  <div class="grid" style="grid-template-columns:1fr 1.4fr">
+    <div class="card" style="display:grid;place-items:center;gap:12px;text-align:center">
+      ${top?ring(top.p,150,12,t('progress')):ring(0,150,12,t('progress'))}
+      <b style="font-size:14px">${top?esc(top.g.title):t('noGoals')}</b>
+      ${top?`<button class="btn btn-g" data-goal="${top.g.id}" style="padding:8px 16px;font-size:12px">${t('milestones')} ${ic('arrow',14)}</button>`:''}
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><b style="font-size:14px">🎯 ${t('focus')}</b>
+      <button class="chip" data-modal="task">${ic('plus',13)} ${t('add')}</button></div>
+      <div style="display:grid;gap:10px;margin-top:14px">
+      ${tt.length?tt.map(x=>taskRow(x)).join(''):`<div class="empty"><div class="e">🌤</div><b>${t('noTasks')}</b><p style="font-size:12px;margin-top:6px">${t('noTasksSub')}</p></div>`}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card"><b style="font-size:14px">🔥 ${t('habits')}</b>
+      <div style="display:grid;gap:11px;margin-top:13px">
+      ${DB.habits.length?DB.habits.slice(0,5).map(h=>`<div class="row" style="gap:10px">
+        <span class="check rnd ${doneToday(h)?'on':''}" data-habit="${h.id}">${doneToday(h)?'✓':''}</span>
+        <span style="flex:1;font-size:12.5px">${esc(h.emoji)} ${esc(h.title)}</span>
+        <span class="tag amber">🔥 ${streakOf(h.id)}</span></div>`).join(''):`<p class="muted" style="font-size:12px">${t('noHabitsSub')}</p>`}
+      </div></div>
+    <div class="card" style="background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(236,72,153,.08)),var(--card);display:grid;align-content:center;gap:10px">
+      <p style="font-size:14px;line-height:1.85;font-weight:500">${t('quote')}</p>
+      <div class="row" style="gap:9px;margin-top:6px">
+      <button class="btn btn-g" style="font-size:12px;padding:9px 14px" data-go="journal">${ic('pen',14)} ${t('journal')}</button>
+      <button class="btn btn-g" style="font-size:12px;padding:9px 14px" data-modal="habit">${ic('plus',14)} ${t('newHabit')}</button></div>
+    </div>
+  </div>`;
+};
+
+const taskRow=x=>{const g=DB.goals.find(g=>g.id===x.goal_id);
+ return `<div class="row card" style="gap:11px;padding:12px;border-radius:13px;background:var(--surface)">
+  <span class="check ${tStatus(x)==='done'?'on':''}" data-task="${x.id}">${tStatus(x)==='done'?'✓':''}</span>
+  <div style="flex:1;min-width:0"><div style="font-size:12.5px;${tStatus(x)==='done'?'text-decoration:line-through;color:var(--text2)':''}">${esc(x.title)}</div>
+  ${g?`<div class="muted" style="font-size:10px;margin-top:3px">${esc(g.emoji)} ${esc(g.title)}</div>`:''}</div>
+  <span class="tag ${x.priority==='high'?'pink':x.priority==='med'?'amber':'green'}">${t(x.priority)}</span>
+  <button class="icbtn" style="width:28px;height:28px" data-del="tasks:${x.id}">${ic('trash',13)}</button></div>`};
+
+V.goals=()=>{
+  let list=DB.goals;
+  return `<div class="ph"><div><h1>${t('goals')}</h1>
+  <p class="sub">${DB.goals.filter(g=>gStatus(g)==='active').length} ${t('active')} · ${DB.goals.filter(g=>gStatus(g)==='done').length} ${t('done')}</p></div>
+  <button class="btn btn-p" data-modal="goal">${ic('plus',15)} ${t('newGoal')}</button></div>
+  ${list.length?`<div class="grid" style="grid-template-columns:repeat(3,1fr)">
+  ${list.map(g=>{const p=goalProgress(g);const ms=DB.ms.filter(m=>m.goal_id===g.id);
+  return `<div class="card" style="display:grid;gap:12px;cursor:pointer" data-goal="${g.id}">
+    <div class="row" style="justify-content:space-between">
+      <span style="font-size:22px">${esc(g.emoji)}</span>
+      <span class="tag ${gStatus(g)==='done'?'green':gStatus(g)==='paused'?'amber':'purple'}">${t(g.category)}</span></div>
+    <b style="font-size:14.5px;line-height:1.45">${esc(g.title)}</b>
+    <div class="row" style="justify-content:space-between;font-size:11px">
+      <span class="muted">${ms.filter(m=>m.done).length}/${ms.length} ${t('milestones')}</span>
+      <span class="num" style="font-weight:800">${p}%</span></div>
+    ${barEl(p,p===100?'g':'')}
+    ${g.target_date?`<span class="muted" style="font-size:10.5px">📅 ${g.target_date}</span>`:''}
+  </div>`}).join('')}</div>`
+  :`<div class="card empty"><div class="e">🎯</div><b style="font-size:16px">${t('noGoals')}</b>
+    <p style="font-size:13px;margin:8px 0 16px">${t('noGoalsSub')}</p>
+    <button class="btn btn-p" data-modal="goal">${ic('plus',15)} ${t('newGoal')}</button></div>`}`;
+};
+
+V.goalDetail=()=>{
+  const g=DB.goals.find(x=>x.id===CURRENT_GOAL);
+  if(!g){VIEW='goals';return V.goals()}
+  const ms=DB.ms.filter(m=>m.goal_id===g.id);
+  const tk=DB.tasks.filter(x=>x.goal_id===g.id);
+  const p=goalProgress(g);
+  return `<button class="chip" data-go="goals" style="justify-self:start">← ${t('back')}</button>
+  <div class="card gdHead" style="display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;background:linear-gradient(135deg,rgba(139,92,246,.13),rgba(236,72,153,.06)),var(--card)">
+    ${ring(p,120,10,t('progress'))}
+    <div><span class="tag purple">${esc(g.emoji)} ${t(g.category)}</span>
+      <h1 style="font-size:21px;margin:8px 0 6px">${esc(g.title)}</h1>
+      <p class="muted" style="font-size:12px;line-height:1.6">${esc(g.description||'')}</p>
+      ${g.target_date?`<p class="muted" style="font-size:11px;margin-top:6px">📅 ${g.start_date} → ${g.target_date}</p>`:''}</div>
+    <div style="display:grid;gap:8px">
+      <select id="gStatus" style="width:auto;padding:8px 12px;font-size:12px">
+        ${['active','done','paused'].map(s=>`<option value="${s}" ${gStatus(g)===s?'selected':''}>${t(s)}</option>`).join('')}
+      </select>
+      <button class="btn btn-d" style="padding:8px 12px;font-size:12px" data-del="goals:${g.id}">${ic('trash',13)} ${t('delete')}</button></div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="card"><div class="row" style="justify-content:space-between">
+      <b style="font-size:14px">🗺 ${t('milestones')}</b>
+      <button class="chip" id="addMs">${ic('plus',13)} ${t('addMs')}</button></div>
+      <div style="display:grid;gap:10px;margin-top:14px">
+      ${ms.length?ms.map(m=>`<div class="row" style="gap:11px">
+        <span class="check ${m.done?'on':''}" data-ms="${m.id}">${m.done?'✓':''}</span>
+        <span style="flex:1;font-size:12.5px;${m.done?'text-decoration:line-through;color:var(--text2)':''}">${esc(m.title)}</span>
+        <button class="icbtn" style="width:28px;height:28px" data-del="milestones:${m.id}">${ic('trash',13)}</button></div>`).join('')
+      :`<p class="muted" style="font-size:12px">—</p>`}</div></div>
+    <div class="card"><div class="row" style="justify-content:space-between">
+      <b style="font-size:14px">✅ ${t('tasks')}</b>
+      <button class="chip" data-modal="task:${g.id}">${ic('plus',13)} ${t('add')}</button></div>
+      <div style="display:grid;gap:10px;margin-top:14px">
+      ${tk.length?tk.map(taskRow).join(''):`<p class="muted" style="font-size:12px">—</p>`}</div></div>
+  </div>`;
+};
+
+V.tasks=()=>{
+  const cols=[['todo','amber'],['doing','purple'],['done','green']];
+  return `<div class="ph"><div><h1>${t('tasks')}</h1><p class="sub">${DB.tasks.length} ${t('all')}</p></div>
+  <button class="btn btn-p" data-modal="task">${ic('plus',15)} ${t('newTask')}</button></div>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);align-items:start">
+  ${cols.map(([c,col])=>{const items=DB.tasks.filter(x=>tStatus(x)===c);
+  return `<div class="kcol" data-col="${c}">
+    <div class="row" style="justify-content:space-between;padding:2px 4px"><b style="font-size:13px">${t(c==='done'?'kdone':c)}</b><span class="tag ${col}">${items.length}</span></div>
+    ${items.map(x=>{const g=DB.goals.find(g=>g.id===x.goal_id);
+    return `<div class="kcard" draggable="true" data-card="${x.id}">
+      <div class="row" style="justify-content:space-between">
+        <span class="tag ${x.priority==='high'?'pink':x.priority==='med'?'amber':'green'}">${t(x.priority)}</span>
+        <button class="icbtn" style="width:26px;height:26px" data-del="tasks:${x.id}">${ic('trash',12)}</button></div>
+      <b style="font-size:12.5px;line-height:1.5">${esc(x.title)}</b>
+      <div class="row muted" style="gap:8px;font-size:10px">${g?esc(g.emoji)+' '+esc(g.title):''}${x.due_date?' · 📅 '+x.due_date:''}</div>
+    </div>`}).join('')}
+  </div>`}).join('')}</div>`;
+};
+
+V.habits=()=>{
+  const days=[...Array(30)].map((_,i)=>iso(Date.now()-(29-i)*864e5));
+  return `<div class="ph"><div><h1>${t('habits')}</h1><p class="sub">🔥 ${bestStreakAll()} ${t('streak')}</p></div>
+  <button class="btn btn-p" data-modal="habit">${ic('plus',15)} ${t('newHabit')}</button></div>
+  ${DB.habits.length?`
+  <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+  ${DB.habits.map(h=>{const st=streakOf(h.id);const last7=[...Array(7)].map((_,i)=>iso(Date.now()-(6-i)*864e5));
+   const pct=Math.round(last7.filter(d=>DB.logs.some(l=>l.habit_id===h.id&&l.log_date===d)).length/7*100);
+   return `<div class="card" style="display:grid;gap:12px">
+    <div class="row" style="justify-content:space-between">
+      <span style="font-size:22px">${esc(h.emoji)}</span>
+      <div class="row" style="gap:6px"><span class="tag amber">🔥 ${st}</span>
+      <button class="icbtn" style="width:28px;height:28px" data-del="habits:${h.id}">${ic('trash',13)}</button></div></div>
+    <b style="font-size:13.5px">${esc(h.title)}</b>
+    <div class="row" style="gap:6px">${last7.map(d=>{const on=DB.logs.some(l=>l.habit_id===h.id&&l.log_date===d);
+      return `<span class="check ${on?'on':''}" style="width:26px;height:26px" data-habit="${h.id}" data-date="${d}">${on?'✓':''}</span>`}).join('')}</div>
+    ${barEl(pct,pct>=85?'g':'')}
+    <div class="row" style="justify-content:space-between;font-size:10.5px"><span class="muted">${t('heat')}</span><span class="num">${pct}%</span></div>
+    <div class="hm">${days.map(d=>`<i class="${DB.logs.some(l=>l.habit_id===h.id&&l.log_date===d)?'on':''}"></i>`).join('')}</div>
+   </div>`}).join('')}</div>`
+  :`<div class="card empty"><div class="e">🔥</div><b style="font-size:16px">${t('noHabits')}</b>
+    <p style="font-size:13px;margin:8px 0 16px">${t('noHabitsSub')}</p>
+    <button class="btn btn-p" data-modal="habit">${ic('plus',15)} ${t('newHabit')}</button></div>`}`;
+};
+
+V.journal=()=>{
+  const e=DB.journal.find(x=>x.entry_date===TODAY)||{mood:3,body:'',gratitude:[]};
+  const moods=['😞','😕','😐','🙂','😄'];
+  return `<div class="ph"><div><h1>${t('journal')}</h1><p class="sub">${TODAY}</p></div>
+  <button class="btn btn-p" id="saveJ">${t('saveEntry')}</button></div>
+  <div class="grid" style="grid-template-columns:1.4fr 1fr">
+    <div style="display:grid;gap:16px;align-content:start">
+      <div class="card"><b style="font-size:14px">${t('mood')}</b>
+        <div class="row" style="gap:10px;margin-top:12px">
+        ${moods.map((m,i)=>`<button class="mood ${e.mood===i+1?'on':''}" data-mood="${i+1}">${m}</button>`).join('')}</div></div>
+      <div class="card"><b style="font-size:14px">✍️ ${t('reflect')}</b>
+        <textarea id="jBody" style="margin-top:12px" placeholder="...">${esc(e.body||'')}</textarea></div>
+      <div class="card"><b style="font-size:14px">🙏 ${t('grat')}</b>
+        <div style="display:grid;gap:9px;margin-top:12px">
+        ${[0,1,2].map(i=>`<input class="jGrat" placeholder="${t('gratPh')}" value="${esc((e.gratitude||[])[i]||'')}">`).join('')}</div></div>
+    </div>
+    <div class="card"><b style="font-size:14px">📓 ${DB.journal.length}</b>
+      <div style="display:grid;gap:10px;margin-top:12px">
+      ${DB.journal.length?DB.journal.map(x=>`<div class="card" style="background:var(--surface);padding:12px;border-radius:12px">
+        <div class="row" style="gap:8px"><span>${moods[(x.mood||3)-1]}</span><span class="muted num" style="font-size:10px">${x.entry_date}</span></div>
+        <p style="font-size:11.5px;margin-top:6px;line-height:1.65">${esc((x.body||'').slice(0,110))}${(x.body||'').length>110?'…':''}</p></div>`).join('')
+      :`<p class="muted" style="font-size:12px">${t('noJournal')}</p>`}</div></div>
+  </div>`;
+};
+
+V.vision=()=>`<div class="ph"><div><h1>${t('vision')}</h1><p class="sub">${DB.vision.length}</p></div>
+  <button class="btn btn-p" data-modal="vision">${ic('plus',15)} ${t('newVision')}</button></div>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+  ${DB.vision.map(v=>`<div class="card" style="display:grid;gap:10px;place-items:center;text-align:center;padding:26px 16px;
+    background:linear-gradient(150deg,rgba(139,92,246,.14),rgba(236,72,153,.06)),var(--card)">
+    <span style="font-size:38px">${esc(v.emoji)}</span>
+    <b style="font-size:12.5px">${esc(v.caption)}</b>
+    <span class="tag purple">${t(v.category||'career')}</span>
+    <button class="icbtn" style="width:28px;height:28px" data-del="vision_items:${v.id}">${ic('trash',13)}</button></div>`).join('')}
+  <button class="card" data-modal="vision" style="border-style:dashed;display:grid;place-items:center;gap:8px;color:var(--text2);min-height:150px">
+    ${ic('plus',22)}<span style="font-size:12px">${t('newVision')}</span></button></div>`;
+
+V.stats=()=>{
+  const w=[...Array(7)].map((_,i)=>iso(Date.now()-(6-i)*864e5));
+  const perDay=w.map(d=>DB.logs.filter(l=>l.log_date===d).length);
+  const mx=Math.max(1,...perDay);
+  const active=DB.goals.filter(g=>gStatus(g)==='active');
+  const avg=active.length?Math.round(active.reduce((a,g)=>a+goalProgress(g),0)/active.length):0;
+  return `<div class="ph"><div><h1>${t('stats')}</h1><p class="sub">${t('heat')}</p></div></div>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+  ${[[avg+'%',t('progress')],[DB.tasks.filter(x=>tStatus(x)==='done').length,t('doneTasks')],[bestStreakAll(),t('bestStreak')],[level(),t('level')]]
+   .map(([v,l])=>`<div class="card"><div class="muted" style="font-size:11px">${l}</div><div class="num" style="font-size:24px;margin-top:6px">${v}</div></div>`).join('')}</div>
+  <div class="grid" style="grid-template-columns:1.4fr 1fr">
+    <div class="card"><b style="font-size:14px">🔥 ${t('habits')} — 7d</b>
+      <div style="display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:16px">
+      ${perDay.map((n,i)=>`<div style="flex:1;display:grid;gap:7px;justify-items:center;align-content:end;height:100%">
+        <span class="num" style="font-size:11px">${n}</span>
+        <div style="width:100%;height:${Math.max(6,n/mx*100)}%;border-radius:8px 8px 4px 4px;background:var(--grad)"></div>
+        <span class="muted" style="font-size:9px">${w[i].slice(5)}</span></div>`).join('')}</div></div>
+    <div class="card"><b style="font-size:14px">🎯 ${t('goals')}</b>
+      <div style="display:grid;gap:14px;margin-top:14px">
+      ${DB.goals.length?DB.goals.map(g=>{const p=goalProgress(g);return `<div data-goal="${g.id}" style="cursor:pointer">
+        <div class="row" style="justify-content:space-between;font-size:12px;margin-bottom:6px;gap:8px">
+        <span style="font-weight:600;flex:1">${esc(g.emoji)} ${esc(g.title)}</span>
+        <span class="tag ${gStatus(g)==='done'?'green':gStatus(g)==='paused'?'amber':'purple'}">${t(gStatus(g))}</span>
+        <span class="num muted">${p}%</span></div>${barEl(p,p===100?'g':'')}</div>`}).join('')
+      :`<div class="empty" style="padding:22px"><div class="e">🎯</div><b style="font-size:14px">${t('noGoals')}</b>
+        <button class="btn btn-p" data-modal="goal" style="margin-top:12px">${ic('plus',15)} ${t('newGoal')}</button></div>`}</div></div>
+  </div>`;
+};
+
+V.settings=()=>`<div class="ph"><div><h1>${t('settings')}</h1><p class="sub">${esc(USER.email)}</p></div></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start">
+    <div style="display:grid;gap:16px">
+      <div class="card"><b style="font-size:14px">🎨 ${t('appearance')}</b><div class="divider"></div>
+        <div class="row" style="gap:12px">
+        ${[['dark','🌙'],['light','☀️']].map(([k,e])=>`<button data-theme-set="${k}" style="flex:1;padding:16px;border-radius:15px;display:grid;gap:8px;justify-items:center;
+          background:${THEME===k?'linear-gradient(135deg,rgba(139,92,246,.25),rgba(236,72,153,.14))':'var(--surface)'};
+          border:1.5px solid ${THEME===k?'rgba(139,92,246,.5)':'var(--border)'}">
+          <span style="font-size:20px">${e}</span><span style="font-size:12px;font-weight:600">${t(k)}</span></button>`).join('')}</div></div>
+      <div class="card"><b style="font-size:14px">🌍 ${t('lang')}</b><div class="divider"></div>
+        <div class="row" style="gap:12px">
+        ${[['ar','🇪🇬 العربية'],['en','🇺🇸 English']].map(([k,l])=>`<button data-lang-set="${k}" style="flex:1;padding:14px;border-radius:14px;font-size:13px;font-weight:600;
+          background:${LANG===k?'linear-gradient(135deg,rgba(139,92,246,.25),rgba(236,72,153,.14))':'var(--surface)'};
+          border:1.5px solid ${LANG===k?'rgba(139,92,246,.5)':'var(--border)'}">${l}</button>`).join('')}</div></div>
+    </div>
+    <div style="display:grid;gap:16px">
+      <div class="card"><b style="font-size:14px">👤 ${t('account')}</b><div class="divider"></div>
+        <div class="field"><label>${t('name')}</label><input id="sName" value="${esc(PROFILE?.name||'')}"></div>
+        <div class="row" style="gap:10px">
+          <button class="btn btn-p" id="sSave" style="flex:1">${t('save')}</button>
+          <button class="btn btn-g" id="sOut">${t('logout')}</button></div></div>
+      <div class="card"><b style="font-size:14px">💾 ${t('exportData')}</b>
+        <p class="muted" style="font-size:12px;margin:6px 0 12px">${t('exportD')}</p>
+        <button class="btn btn-g" id="sExport">${t('export')}</button></div>
+      <div class="card" style="border-color:rgba(236,72,153,.3)"><b style="font-size:14px;color:var(--pink)">⚠️ ${t('dangerZone')}</b>
+        <p class="muted" style="font-size:12px;margin:6px 0 12px">${t('delAccD')}</p>
+        <button class="btn btn-d" id="sWipe">${t('delAcc')}</button></div>
+    </div>
+  </div>`;
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+function openModal(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on')}
+function closeModal(){$('#modal').classList.remove('on')}
+window.closeModal=closeModal;
+window.closeSide=()=>{$('#side')?.classList.remove('open');$('#scrim').classList.remove('on')};
+
+const modalHead=(title)=>`<div class="row" style="justify-content:space-between;margin-bottom:16px"><b style="font-size:16px">${title}</b>
+<button class="icbtn" onclick="closeModal()">✕</button></div>`;
+
+function modalGoal(){
+  openModal(`${modalHead(t('newGoal'))}
+  <div class="field"><label>${t('title')} *</label><input id="mTitle" placeholder="..."></div>
+  <div class="field"><label>${t('desc')}</label><textarea id="mDesc" style="min-height:70px"></textarea></div>
+  <div class="field"><label>${t('category')}</label>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+    ${CATS.map((c,i)=>`<span class="chip mCat ${i===0?'on':''}" data-cat="${c}">${CAT_EMOJI[c]} ${t(c)}</span>`).join('')}</div></div>
+  <div class="field"><label>${t('target')}</label><input id="mDate" type="date"></div>
+  <button class="btn btn-p" style="width:100%" id="mSave">${t('save')}</button>`);
+  let cat='career';
+  document.querySelectorAll('.mCat').forEach(c=>c.onclick=()=>{cat=c.dataset.cat;
+    document.querySelectorAll('.mCat').forEach(x=>x.classList.toggle('on',x===c))});
+  $('#mSave').onclick=async e=>{
+    const title=$('#mTitle').value.trim();if(!title)return toast(t('need'));
+    e.target.disabled=true;
+    const {data,error}=await ins('goals',{title,description:$('#mDesc').value.trim(),category:cat,
+      emoji:CAT_EMOJI[cat],target_date:$('#mDate').value||null});
+    if(error){toast(error.message);e.target.disabled=false;return}
+    DB.goals.unshift(data);await addXP(20);closeModal();render();toast('🎯 +20 '+t('xp'));
+  };
+}
+function modalTask(goalId){
+  openModal(`${modalHead(t('newTask'))}
+  <div class="field"><label>${t('title')} *</label><input id="mTitle" placeholder="..."></div>
+  <div class="field"><label>${t('goals')}</label><select id="mGoal">
+    <option value="">—</option>${DB.goals.map(g=>`<option value="${g.id}" ${goalId===g.id?'selected':''}>${esc(g.emoji)} ${esc(g.title)}</option>`).join('')}</select></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+    <div class="field"><label>${t('priority')}</label><select id="mPri">
+      ${['high','med','low'].map(p=>`<option value="${p}" ${p==='med'?'selected':''}>${t(p)}</option>`).join('')}</select></div>
+    <div class="field"><label>${t('due')}</label><input id="mDate" type="date" value="${TODAY}"></div></div>
+  <button class="btn btn-p" style="width:100%" id="mSave">${t('save')}</button>`);
+  $('#mSave').onclick=async e=>{
+    const title=$('#mTitle').value.trim();if(!title)return toast(t('need'));
+    e.target.disabled=true;
+    const {data,error}=await ins('tasks',{title,goal_id:$('#mGoal').value||null,priority:$('#mPri').value,due_date:$('#mDate').value||null});
+    if(error){toast(error.message);e.target.disabled=false;return}
+    DB.tasks.unshift(data);closeModal();render();
+  };
+}
+function modalHabit(){
+  const EM=['🔥','📖','💪','🧘','💧','🌅','💻','🚶','🎧','🥗'];
+  openModal(`${modalHead(t('newHabit'))}
+  <div class="field"><label>${t('title')} *</label><input id="mTitle" placeholder="..."></div>
+  <div class="field"><label>Emoji</label><div class="row" style="gap:8px;flex-wrap:wrap">
+  ${EM.map((e,i)=>`<span class="chip mEm ${i===0?'on':''}" data-em="${e}" style="font-size:16px;padding:7px 11px">${e}</span>`).join('')}</div></div>
+  <button class="btn btn-p" style="width:100%" id="mSave">${t('save')}</button>`);
+  let em='🔥';
+  document.querySelectorAll('.mEm').forEach(c=>c.onclick=()=>{em=c.dataset.em;
+    document.querySelectorAll('.mEm').forEach(x=>x.classList.toggle('on',x===c))});
+  $('#mSave').onclick=async e=>{
+    const title=$('#mTitle').value.trim();if(!title)return toast(t('need'));
+    e.target.disabled=true;
+    const {data,error}=await ins('habits',{title,emoji:em});
+    if(error){toast(error.message);e.target.disabled=false;return}
+    DB.habits.push(data);closeModal();render();
+  };
+}
+function modalVision(){
+  const EM=['✨','🏠','💻','🏆','✈️','📚','🏃','🎤','🌅','💍'];
+  openModal(`${modalHead(t('newVision'))}
+  <div class="field"><label>${t('title')} *</label><input id="mTitle" placeholder="..."></div>
+  <div class="field"><label>Emoji</label><div class="row" style="gap:8px;flex-wrap:wrap">
+  ${EM.map((e,i)=>`<span class="chip mEm ${i===0?'on':''}" data-em="${e}" style="font-size:16px;padding:7px 11px">${e}</span>`).join('')}</div></div>
+  <div class="field"><label>${t('category')}</label><select id="mCatS">
+    ${CATS.map(c=>`<option value="${c}">${t(c)}</option>`).join('')}</select></div>
+  <button class="btn btn-p" style="width:100%" id="mSave">${t('save')}</button>`);
+  let em='✨';
+  document.querySelectorAll('.mEm').forEach(c=>c.onclick=()=>{em=c.dataset.em;
+    document.querySelectorAll('.mEm').forEach(x=>x.classList.toggle('on',x===c))});
+  $('#mSave').onclick=async e=>{
+    const caption=$('#mTitle').value.trim();if(!caption)return toast(t('need'));
+    e.target.disabled=true;
+    const {data,error}=await ins('vision_items',{caption,emoji:em,category:$('#mCatS').value});
+    if(error){toast(error.message);e.target.disabled=false;return}
+    DB.vision.unshift(data);closeModal();render();
+  };
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+async function toggleTask(id){
+  const x=DB.tasks.find(v=>v.id===id);const st=tStatus(x)==='done'?'todo':'done';
+  const {data}=await upd('tasks',id,{status:st});
+  if(data){Object.assign(x,data);if(st==='done')await addXP(10);render()}
+}
+async function toggleMs(id){
+  const m=DB.ms.find(v=>v.id===id);const {data}=await upd('milestones',id,{done:!m.done});
+  if(data){Object.assign(m,data);if(data.done)await addXP(25);render()}
+}
+async function toggleHabit(hid,date=TODAY){
+  const found=DB.logs.find(l=>l.habit_id===hid&&l.log_date===date);
+  if(found){await del('habit_logs',found.id);DB.logs=DB.logs.filter(l=>l.id!==found.id)}
+  else{const {data,error}=await ins('habit_logs',{habit_id:hid,log_date:date});
+    if(error)return toast(error.message);DB.logs.push(data);await addXP(5)}
+  render();
+}
+async function removeRow(tbl,id){
+  if(!confirm(t('confirmDel')))return;
+  const {error}=await del(tbl,id);if(error)return toast(error.message);
+  const map={goals:'goals',milestones:'ms',tasks:'tasks',habits:'habits',vision_items:'vision'};
+  DB[map[tbl]]=DB[map[tbl]].filter(x=>x.id!==id);
+  if(tbl==='goals'){DB.ms=DB.ms.filter(m=>m.goal_id!==id);VIEW='goals'}
+  if(tbl==='habits')DB.logs=DB.logs.filter(l=>l.habit_id!==id);
+  render();
+}
+async function saveJournal(mood){
+  const body=$('#jBody').value;
+  const gratitude=[...document.querySelectorAll('.jGrat')].map(i=>i.value.trim()).filter(Boolean);
+  const row={user_id:USER.id,entry_date:TODAY,mood,body,gratitude};
+  const {data,error}=await sb.from('journal').upsert(row,{onConflict:'user_id,entry_date'}).select().single();
+  if(error)return toast(error.message);
+  DB.journal=[data,...DB.journal.filter(x=>x.entry_date!==TODAY)];
+  await addXP(15);toast(t('saved'));render();
+}
+
+async function seedDemo(){
+  const g1=(await ins('goals',{title:LANG==='ar'?'أصبح مطوّرة واجهات أمامية':'Become a Front-End Developer',
+    category:'career',emoji:'💼',description:LANG==='ar'?'٦ شهور، ٢.٥ ساعة يوميًا':'6 months, 2.5h/day',
+    target_date:iso(Date.now()+180*864e5)})).data;
+  const g2=(await ins('goals',{title:LANG==='ar'?'قراءة ٢٤ كتاب':'Read 24 books',category:'learning',emoji:'📚',
+    target_date:iso(Date.now()+150*864e5)})).data;
+  const MS=LANG==='ar'?['إتقان HTML و CSS','أساسيات JavaScript','٣ مشاريع حقيقية','البورتفوليو والتقديم']
+                      :['Master HTML & CSS','JavaScript fundamentals','Build 3 real projects','Portfolio + job hunt'];
+  for(let i=0;i<MS.length;i++) await ins('milestones',{goal_id:g1.id,title:MS[i],position:i,done:i===0});
+  const TK=LANG==='ar'?[['بناء navbar متجاوب','high','doing'],['٤٥ دقيقة كورس JavaScript','med','doing'],['رفع البورتفوليو على GitHub','high','todo'],['مراجعة CSS Grid','low','todo']]
+                      :[['Build responsive navbar','high','doing'],['45 min JavaScript course','med','doing'],['Push portfolio to GitHub','high','todo'],['Review CSS Grid','low','todo']];
+  for(const [title,priority,status] of TK) await ins('tasks',{title,priority,status,goal_id:g1.id,due_date:TODAY});
+  const HB=LANG==='ar'?[['برمجة ساعة','💻'],['قراءة ٢٠ صفحة','📖'],['مشي صباحي','🚶']]
+                      :[['Code 1 hour','💻'],['Read 20 pages','📖'],['Morning walk','🚶']];
+  for(const [title,emoji] of HB){
+    const h=(await ins('habits',{title,emoji})).data;
+    for(let d=0;d<9;d++) if(Math.random()>.25) await ins('habit_logs',{habit_id:h.id,log_date:iso(Date.now()-d*864e5)});
+  }
+  await ins('vision_items',{caption:LANG==='ar'?'أول وظيفة برمجة':'First dev job',emoji:'💻',category:'career'});
+  await ins('vision_items',{caption:LANG==='ar'?'ركن قراءة':'Reading nook',emoji:'📚',category:'learning'});
+  await addXP(120);
+}
+
+/* ============================================================
+   RENDER + EVENTS
+   ============================================================ */
+let MOOD=3;
+function render(){
+  document.documentElement.lang=LANG;
+  document.documentElement.dir=LANG==='ar'?'rtl':'ltr';
+  document.documentElement.dataset.theme=THEME;
+  if(!USER){$('#root').innerHTML=authView();bindAuth();return}
+  const body=VIEW==='goalDetail'?V.goalDetail():(V[VIEW]||V.dashboard)();
+  $('#root').innerHTML=shell(body);
+  bindApp();
+}
+function bindApp(){
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{VIEW=b.dataset.go;closeSide();window.scrollTo(0,0);render()});
+  document.querySelectorAll('[data-goal]').forEach(b=>b.onclick=e=>{
+    if(e.target.closest('[data-del]'))return;
+    CURRENT_GOAL=b.dataset.goal;VIEW='goalDetail';window.scrollTo(0,0);render()});
+  document.querySelectorAll('[data-task]').forEach(b=>b.onclick=()=>toggleTask(b.dataset.task));
+  document.querySelectorAll('[data-ms]').forEach(b=>b.onclick=()=>toggleMs(b.dataset.ms));
+  document.querySelectorAll('[data-habit]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleHabit(b.dataset.habit,b.dataset.date||TODAY)});
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const [tbl,id]=b.dataset.del.split(':');removeRow(tbl,id)});
+  document.querySelectorAll('[data-modal]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const [kind,arg]=b.dataset.modal.split(':');
+    ({goal:modalGoal,task:()=>modalTask(arg),habit:modalHabit,vision:modalVision}[kind])();});
+  const hb=$('#hamb');if(hb)hb.onclick=()=>{$('#side').classList.add('open');$('#scrim').classList.add('on')};
+  const th=$('#tTheme');if(th)th.onclick=()=>setTheme(THEME==='dark'?'light':'dark');
+  const lg=$('#tLang');if(lg)lg.onclick=()=>setLang(LANG==='ar'?'en':'ar');
+  document.querySelectorAll('[data-theme-set]').forEach(b=>b.onclick=()=>setTheme(b.dataset.themeSet));
+  document.querySelectorAll('[data-lang-set]').forEach(b=>b.onclick=()=>setLang(b.dataset.langSet));
+
+  // goal status
+  const gs=$('#gStatus');if(gs)gs.onchange=async()=>{
+    const {data}=await upd('goals',CURRENT_GOAL,{status:gs.value});
+    if(data){Object.assign(DB.goals.find(g=>g.id===CURRENT_GOAL),data);render()}};
+  const am=$('#addMs');if(am)am.onclick=async()=>{
+    const title=prompt(t('addMs'));if(!title)return;
+    const pos=DB.ms.filter(m=>m.goal_id===CURRENT_GOAL).length;
+    const {data,error}=await ins('milestones',{goal_id:CURRENT_GOAL,title,position:pos});
+    if(error)return toast(error.message);DB.ms.push(data);render()};
+
+  // journal
+  const cur=DB.journal.find(x=>x.entry_date===TODAY);MOOD=cur?cur.mood:3;
+  document.querySelectorAll('[data-mood]').forEach(b=>b.onclick=()=>{MOOD=+b.dataset.mood;
+    document.querySelectorAll('[data-mood]').forEach(x=>x.classList.toggle('on',x===b))});
+  const sj=$('#saveJ');if(sj)sj.onclick=()=>saveJournal(MOOD);
+
+  // kanban drag & drop
+  let dragId=null;
+  document.querySelectorAll('[data-card]').forEach(c=>{
+    c.ondragstart=()=>{dragId=c.dataset.card;c.classList.add('drag')};
+    c.ondragend=()=>c.classList.remove('drag')});
+  document.querySelectorAll('[data-col]').forEach(col=>{
+    col.ondragover=e=>{e.preventDefault();col.classList.add('over')};
+    col.ondragleave=()=>col.classList.remove('over');
+    col.ondrop=async e=>{e.preventDefault();col.classList.remove('over');
+      if(!dragId)return;const st=col.dataset.col;
+      const x=DB.tasks.find(v=>v.id===dragId);if(!x||x.status===st)return;
+      const {data}=await upd('tasks',dragId,{status:st});
+      if(data){Object.assign(x,data);if(st==='done')await addXP(10);render()}}});
+
+  // settings
+  const sv=$('#sSave');if(sv)sv.onclick=async()=>{
+    const name=$('#sName').value.trim()||PROFILE.name;
+    await sb.from('profiles').update({name}).eq('id',USER.id);PROFILE.name=name;toast(t('saved'));render()};
+  const so=$('#sOut');if(so)so.onclick=async()=>{await sb.auth.signOut();USER=null;VIEW='dashboard';render()};
+  const se=$('#sExport');if(se)se.onclick=()=>{
+    const blob=new Blob([JSON.stringify({profile:PROFILE,...DB},null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='goalify-data.json';a.click()};
+  const sw=$('#sWipe');if(sw)sw.onclick=async()=>{
+    if(!confirm(t('confirmDel')))return;
+    for(const tb of ['habit_logs','habits','milestones','tasks','journal','vision_items','goals'])
+      await sb.from(tb).delete().eq('user_id',USER.id);
+    await loadAll();toast(t('saved'));render()};
+}
+function setTheme(v){THEME=v;set('theme',v);
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content',v==='dark'?'#0D0D12':'#F7F7FB');
+  if(USER)sb.from('profiles').update({theme:v}).eq('id',USER.id);render()}
+function setLang(v){LANG=v;set('lang',v);if(USER)sb.from('profiles').update({lang:v}).eq('id',USER.id);render()}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function boot(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session?.user){USER=session.user;await loadAll()}
+  render();
+}
+sb.auth.onAuthStateChange((ev,session)=>{
+  if(ev==='SIGNED_OUT'){USER=null;render()}
+});
+boot();
+</script>
+
+</body>
+</html>
