@@ -194,12 +194,14 @@ textarea{resize:vertical;min-height:110px;line-height:1.7}
 .seg button.on{background:var(--grad);color:#fff;box-shadow:0 6px 16px rgba(139,92,246,.35)}
 
 /* ================= NO HORIZONTAL SCROLL — MOBILE FIT ================= */
-html{max-width:100%;overflow-x:clip}
-body{max-width:100%;overflow-x:clip;min-height:100dvh}
+html{max-width:100%}
+body{max-width:100%;overflow-x:hidden;min-height:100dvh}
+#app{overflow-x:clip}
 #root,#app,.main{max-width:100%;min-width:0}
 .page > *{max-width:100%}
 .page::after{content:"";display:block;height:1px}
 .card,.kcol,.kcard,.top,.ph{min-width:0}
+.card{transform:translateZ(0);backface-visibility:hidden;contain:paint}
 .row{min-width:0;flex-wrap:wrap}
 .row > *{min-width:0}
 b,span,p,div,h1{overflow-wrap:anywhere;word-break:break-word}
@@ -215,7 +217,7 @@ select,input,textarea{max-width:100%}
   /* هيدر تفاصيل الهدف: يتراص بدل ما يتقصف */
   .page .card[style*="auto 1fr auto"]{justify-items:stretch;text-align:start}
   .side{width:min(240px,80vw)}
-  .top{padding:11px 14px;gap:8px}
+  .top{position:static;padding:11px 14px;gap:8px}
   .top b{font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .card{padding:15px;border-radius:16px}
   .ph{gap:10px}
