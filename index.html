@@ -78,8 +78,8 @@ textarea{resize:vertical;min-height:110px;line-height:1.7}
 [dir="rtl"] .sw.on::after{transform:translateX(-19px)}
 
 /* shell */
-#app{display:flex;min-height:100vh}
-.side{width:230px;flex-shrink:0;background:var(--surface);border-inline-end:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow-y:auto}
+#app{display:flex;min-height:100dvh;width:100%}
+.side{width:230px;flex-shrink:0;background:var(--surface);border-inline-end:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100dvh;overflow-y:auto}
 .logo{display:flex;align-items:center;gap:10px;padding:2px 8px 18px}
 .orb{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff;font-family:var(--fh);font-weight:800;box-shadow:0 6px 18px rgba(139,92,246,.4)}
 .nav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;font-size:13px;font-weight:500;color:var(--text2);width:100%;text-align:start;transition:.18s}
@@ -89,7 +89,7 @@ textarea{resize:vertical;min-height:110px;line-height:1.7}
 .nav.on svg{color:var(--primary2)}
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
 .top{display:flex;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:20}
-.page{padding:22px;display:grid;gap:16px;flex:1;align-content:start}
+.page{padding:22px;display:grid;gap:16px;align-content:start;width:100%;min-width:0}
 .ph{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
 .ph h1{font-size:22px}
 .ph .sub{color:var(--text2);font-size:12.5px;margin-top:4px}
@@ -130,13 +130,16 @@ textarea{resize:vertical;min-height:110px;line-height:1.7}
 .mood.on{background:linear-gradient(135deg,rgba(139,92,246,.28),rgba(236,72,153,.16));border-color:rgba(139,92,246,.5)}
 
 @media(max-width:900px){
-  .side{position:fixed;z-index:60;inset-inline-start:0;top:0;transform:translateX(-105%);transition:transform .28s}
-  [dir="rtl"] .side{transform:translateX(105%)}
-  .side.open{transform:none!important;box-shadow:0 0 60px rgba(0,0,0,.5)}
+  .side{position:fixed;z-index:60;inset-inline-start:0;top:0;height:100dvh;
+    transform:translateX(-100%);visibility:hidden;transition:transform .28s,visibility .28s}
+  [dir="rtl"] .side{transform:translateX(100%)}
+  .side.open{transform:translateX(0)!important;visibility:visible;box-shadow:0 0 60px rgba(0,0,0,.5)}
   #scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;display:none}
   #scrim.on{display:block}
   .hamb{display:grid!important}
-  .page{padding:14px;gap:14px;padding-bottom:88px}
+  .page{padding:14px;gap:14px;padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+  #app{display:block}
+  .main{width:100%}
   .grid[style*="repeat"]{grid-template-columns:1fr!important}
   .ph h1{font-size:19px}
   .auth{grid-template-columns:1fr}
@@ -144,6 +147,7 @@ textarea{resize:vertical;min-height:110px;line-height:1.7}
   .auth-form{padding:34px 22px}
   .bottom{display:flex;position:fixed;bottom:0;inset-inline:0;z-index:40;background:var(--surface);border-top:1px solid var(--border);
    padding:8px 4px calc(8px + env(safe-area-inset-bottom));justify-content:space-around}
+  .page::after{height:calc(96px + env(safe-area-inset-bottom))!important;display:block!important}
   .bottom button{flex:1;display:grid;justify-items:center;gap:3px;padding:6px 2px;border-radius:12px;color:var(--text2);font-size:9px;font-weight:600}
   .bottom button svg{width:20px;height:20px}
   .bottom button.on{color:var(--text);background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(236,72,153,.1))}
@@ -151,10 +155,50 @@ textarea{resize:vertical;min-height:110px;line-height:1.7}
   .hm{grid-template-columns:repeat(10,1fr)}
 }
 
+
+/* ================= SPLASH ================= */
+#splash{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--bg);
+ transition:opacity .55s ease,visibility .55s}
+#splash.gone{opacity:0;visibility:hidden;pointer-events:none}
+#splash .glow{position:absolute;width:min(560px,120vw);height:min(560px,120vw);border-radius:50%;
+ background:radial-gradient(circle,rgba(139,92,246,.28),rgba(236,72,153,.12) 45%,transparent 70%);
+ filter:blur(10px);animation:breathe 3.4s ease-in-out infinite}
+#splash .inner{position:relative;display:grid;justify-items:center;gap:0;text-align:center;padding:20px}
+.mark{width:96px;height:96px;border-radius:30px;background:var(--grad);display:grid;place-items:center;
+ color:#fff;font-family:var(--fh);font-weight:800;font-size:44px;line-height:1;
+ box-shadow:0 24px 60px rgba(139,92,246,.5),inset 0 -6px 18px rgba(0,0,0,.18);
+ animation:pop .8s cubic-bezier(.2,1.2,.35,1) both}
+.mark::after{content:"";position:absolute;width:96px;height:96px;border-radius:30px;
+ box-shadow:0 0 0 0 rgba(139,92,246,.45);animation:pulse 2.4s ease-out infinite}
+#splash h1{font-size:34px;letter-spacing:-.03em;margin-top:24px;animation:rise .7s .2s ease both}
+#splash p{color:var(--text2);font-size:14px;margin-top:10px;line-height:1.7;max-width:280px;animation:rise .7s .35s ease both}
+#splash .load{width:120px;height:3px;border-radius:99px;background:var(--track);margin-top:34px;overflow:hidden;animation:rise .7s .5s ease both}
+#splash .load i{display:block;height:100%;width:40%;border-radius:99px;background:var(--grad);animation:slide 1.3s ease-in-out infinite}
+@keyframes pop{from{opacity:0;transform:scale(.6) translateY(14px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(139,92,246,.4)}70%{box-shadow:0 0 0 34px rgba(139,92,246,0)}100%{box-shadow:0 0 0 0 rgba(139,92,246,0)}}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+[dir="rtl"] @keyframes slide{0%{transform:translateX(100%)}100%{transform:translateX(-350%)}}
+
+/* ================= AUTH BRAND (centered) ================= */
+.brand{display:grid;justify-items:center;text-align:center;margin-bottom:26px}
+.brand .mark{width:74px;height:74px;border-radius:24px;font-size:34px;animation:pop .6s cubic-bezier(.2,1.2,.35,1) both}
+.brand .mark::after{display:none}
+.brand h1{font-size:28px;margin-top:18px;letter-spacing:-.02em}
+.brand p{color:var(--text2);font-size:13.5px;margin-top:7px;line-height:1.7;max-width:300px}
+.auth-form h2.aTitle{font-size:20px;text-align:center;margin-top:6px}
+.auth-form p.aSub{text-align:center;font-size:12.5px;margin:6px 0 22px}
+.seg{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:22px}
+.seg button{flex:1;padding:10px;border-radius:11px;font-size:13px;font-weight:600;color:var(--text2);transition:.22s}
+.seg button.on{background:var(--grad);color:#fff;box-shadow:0 6px 16px rgba(139,92,246,.35)}
+
 /* ================= NO HORIZONTAL SCROLL — MOBILE FIT ================= */
-html,body{max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+html{max-width:100%;overflow-x:clip}
+body{max-width:100%;overflow-x:clip;min-height:100dvh}
 #root,#app,.main{max-width:100%;min-width:0}
 .page > *{max-width:100%}
+.page::after{content:"";display:block;height:1px}
 .card,.kcol,.kcard,.top,.ph{min-width:0}
 .row{min-width:0;flex-wrap:wrap}
 .row > *{min-width:0}
@@ -190,7 +234,7 @@ select,input,textarea{max-width:100%}
   .gdHead select,.gdHead .btn{width:100%}
 }
 @media(max-width:400px){
-  .page{padding:11px}
+  .page{padding:11px;padding-bottom:calc(130px + env(safe-area-inset-bottom))}
   .card{padding:13px}
   .ph h1{font-size:17px}
   .mood{font-size:17px}
@@ -200,6 +244,15 @@ select,input,textarea{max-width:100%}
 </style>
 </head>
 <body>
+<div id="splash">
+  <div class="glow"></div>
+  <div class="inner">
+    <div class="mark">G</div>
+    <h1 id="spName">Goalify</h1>
+    <p id="spTag">حوّل أحلامك لخطة تعيشها</p>
+    <div class="load"><i></i></div>
+  </div>
+</div>
 <div id="root"></div>
 <div id="scrim" onclick="closeSide()"></div>
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
@@ -478,9 +531,17 @@ function authView(){
     <div class="glass"><p style="font-size:14px;line-height:1.8;font-weight:500">${t('quote')}</p></div>
   </div>
   <div class="auth-form">
-    <div class="row" style="gap:10px;margin-bottom:28px"><div class="orb">G</div><div><b style="font-size:16px">${CONFIG.APP_NAME}</b><div class="muted" style="font-size:11px">${t('tagline')}</div></div></div>
-    <h1 style="font-size:25px">${isLogin?t('welcome'):t('joinT')}</h1>
-    <p class="muted" style="font-size:13px;margin:7px 0 22px">${isLogin?t('welcomeSub'):t('joinSub')}</p>
+    <div class="brand">
+      <div class="mark">G</div>
+      <h1>${CONFIG.APP_NAME}</h1>
+      <p>${t('tagline')}</p>
+    </div>
+    <div class="seg">
+      <button class="${isLogin?'on':''}" data-mode="login">${t('login')}</button>
+      <button class="${isLogin?'':'on'}" data-mode="register">${t('register')}</button>
+    </div>
+    <h2 class="aTitle">${isLogin?t('welcome'):t('joinT')}</h2>
+    <p class="aSub muted">${isLogin?t('welcomeSub'):t('joinSub')}</p>
     ${isLogin?'':`<div class="field"><label>${t('name')}</label><input id="aName" placeholder="Salma"></div>`}
     <div class="field"><label>${t('email')}</label><input id="aMail" type="email" placeholder="you@mail.com" autocomplete="email"></div>
     <div class="field"><label>${t('pass')}</label><input id="aPass" type="password" placeholder="••••••••" autocomplete="${isLogin?'current-password':'new-password'}"></div>
@@ -497,6 +558,7 @@ function authView(){
 }
 function bindAuth(){
   $('#aSwap').onclick=e=>{e.preventDefault();AUTH_MODE=AUTH_MODE==='login'?'register':'login';render()};
+  document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{AUTH_MODE=b.dataset.mode;render()});
   $('#aLang').onclick=()=>setLang(LANG==='ar'?'en':'ar');
   $('#aTheme').onclick=()=>setTheme(THEME==='dark'?'light':'dark');
   const sd=$('#aSeed'); if(sd) sd.onclick=async()=>{
@@ -1060,9 +1122,22 @@ function setLang(v){LANG=v;set('lang',v);if(USER)sb.from('profiles').update({lan
    BOOT
    ============================================================ */
 async function boot(){
+  // splash: يظهر بلغة/ثيم المستخدم المحفوظين
+  const sp=document.getElementById('splash');
+  document.documentElement.lang=LANG;
+  document.documentElement.dir=LANG==='ar'?'rtl':'ltr';
+  document.documentElement.dataset.theme=THEME;
+  document.getElementById('spName').textContent=CONFIG.APP_NAME;
+  document.getElementById('spTag').textContent=t('tagline');
+  const started=Date.now();
+
   const {data:{session}}=await sb.auth.getSession();
   if(session?.user){USER=session.user;await loadAll()}
   render();
+
+  // نضمن إن السبلاش يبان 1.6 ثانية على الأقل (مش وميض سريع)
+  const wait=Math.max(0,1600-(Date.now()-started));
+  setTimeout(()=>{sp.classList.add('gone');setTimeout(()=>sp.remove(),700)},wait);
 }
 sb.auth.onAuthStateChange((ev,session)=>{
   if(ev==='SIGNED_OUT'){USER=null;render()}
